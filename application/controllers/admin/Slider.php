@@ -1,10 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Slider extends CI_Controller{
+class Slider extends CI_Controller
+{
     public function __construct()
     {
         parent::__construct();
+        cek_login();
+        cek_user();
     }
 
     public function index()
@@ -38,16 +41,17 @@ class Slider extends CI_Controller{
 
             $this->load->view('admin/_layout', $data);
         } else {
-            if ($this->upload->do_upload('image')) 
-            {
+            if ($this->upload->do_upload('image')) {
                 $image = $this->upload->data();
                 $gambar = $image['file_name'];
-            } else { $gambar = ''; }
+            } else {
+                $gambar = '';
+            }
 
 
             $nama = $this->input->post('nama');
             $image = $gambar;
-            
+
             if ($this->ModelSlider->createSlider($nama, $image) == true) {
                 $this->session->set_flashdata('success_slider', 'Proses membuat Slider Berhasil');
                 redirect("admin/slider");
@@ -58,9 +62,8 @@ class Slider extends CI_Controller{
         }
     }
 
-    public function edit(){
-        
-
+    public function edit()
+    {
         $this->form_validation->set_rules(
             'nama',
             'Nama',
@@ -70,7 +73,6 @@ class Slider extends CI_Controller{
                 'min_length' => "<div class='alert alert-danger' role='alert'>Nama Slider Terlalu Pendek</div>"
             ]
         );
-
 
         $id = $this->uri->segment(4);
 
@@ -87,29 +89,31 @@ class Slider extends CI_Controller{
             $data['heading'] = 'Slider';
             $data['subview'] = 'admin/slider/edit';
             $data['slider'] = $this->ModelSlider->findById($id);
-    
+
             $this->load->view('admin/_layout', $data);
         } else {
             $id_slider = $this->input->post('slider_id');
-            $nama = $this->input->post('nama_kategori');
+            $nama = $this->input->post('nama');
 
-            $old_image = $this->ModelCategory->getImage($id_slider); 
-    
-            if ($this->upload->do_upload('image')) {
-               
-                $imageData = $this->upload->data();
-                $image = $imageData['file_name'];
+            $old_image = $this->ModelSlider->getImage($id_slider);
 
-                
-                
-                if (!empty($old_image)) {
-                    unlink('./assets/img/upload/slider/' . $old_image);
+            if (!empty($_FILES['image']['name'])) {
+                if ($this->upload->do_upload('image')) {
+                    $imageData = $this->upload->data();
+                    $image = $imageData['file_name'];
+
+                    if (!empty($old_image)) {
+                        unlink('./assets/img/upload/slider/' . $old_image);
+                    }
+                } else {
+                    $this->session->set_flashdata('error_slider', 'Error uploading image');
+                    redirect("admin/slider", 'refresh');
                 }
             } else {
-                $image = $old_image; 
+                $image = $old_image;
             }
-    
-            if ($this->ModalSlider->updateSlider($id_slider, $nama, $image) == true) {
+
+            if ($this->ModelSlider->updateSlider($id_slider, $nama, $image) == true) {
                 $this->session->set_flashdata('success_slider', 'Proses update Slider Berhasil');
                 redirect("admin/slider");
             } else {
@@ -119,14 +123,15 @@ class Slider extends CI_Controller{
         }
     }
 
+
     public function delete()
     {
         $id = $this->uri->segment(4);
-        
+
         $image = $this->ModelSlider->getImage($id);
-        
-        
-        
+
+
+
         if (!empty($image)) {
             unlink('./assets/img/upload/slider/' . $image);
         }

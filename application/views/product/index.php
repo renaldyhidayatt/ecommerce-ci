@@ -51,6 +51,7 @@
                         <div class="mt-6">
                             <h1>Selected Quantity</h1>
                             <select id="quantitySelect" name="quantity" onchange="updateQuantity();" class="border border-gray-300 rounded-md py-2 px-4">
+                                <option value="pilih quantity">Pilih quantity</option>
                                 <?php
                                 for ($i = 1; $i <= $row->countInStock; $i++) {
                                     echo "<option value='$i'>$i</option>";

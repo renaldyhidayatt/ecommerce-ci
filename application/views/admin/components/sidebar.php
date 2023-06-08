@@ -64,13 +64,24 @@
                     </a>
                 </li>
                 <li class="sidebar-item ">
+                    <a href="<?= base_url('admin/order'); ?>" class="sidebar-link">
+                        <i class="bi bi-hammer"></i>
+                        <span>order</span>
+                    </a>
+                </li>
+                <li class="sidebar-item ">
                     <a href="<?= base_url('admin/slider'); ?>" class="sidebar-link">
                         <i class="bi bi-hammer"></i>
                         <span>Slider</span>
                     </a>
                 </li>
-
-                
+                <li class="sidebar-title">Logout</li>
+                <li class="sidebar-item ">
+                    <a href="<?= base_url('auth/logout'); ?>" class="sidebar-link">
+                        <i class="bi bi-hammer"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

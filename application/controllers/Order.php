@@ -12,7 +12,7 @@ class Order extends CI_Controller
     public function index()
     {
         $data['subview'] = 'order/index';
-        $data['order'] = $this->ModelOrder->findAll();
+        $data['order'] = $this->ModelOrder->findByUserId($this->session->userdata('user_id'));
 
 
         $this->load->view('_layout', $data);
@@ -74,4 +74,6 @@ class Order extends CI_Controller
 		$this->dompdf->stream("bukti-order-$user_id.pdf", array('Attachment' => 0));
 
     }
+
+    // delete
 }

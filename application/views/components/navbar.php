@@ -2,7 +2,7 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
         <a href="<?= base_url(); ?>" class="flex items-center">
             <span class="self-center text-2xl font-semibold whitespace-nowrap">
-                Mamang Rust
+                Toko Online
             </span>
         </a>
 

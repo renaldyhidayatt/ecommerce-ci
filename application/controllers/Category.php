@@ -17,7 +17,8 @@ class Category extends CI_Controller{
             $data['category'] = $category;
             $this->load->view('_layout', $data);
         }else{
-            echo "<h1>Hello</h1>";
+            $data['subview'] = 'category/notfound';
+            $this->load->view('_layout', $data);
         }
     }
 }

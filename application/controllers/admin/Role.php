@@ -1,12 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Role extends CI_Controller {
-    
+class Role extends CI_Controller
+{
+
     public function __construct()
     {
         parent::__construct();
-
+        cek_login();
+        cek_user();
         // Load the required models
         $this->load->model('ModelRole');
     }
@@ -44,7 +46,7 @@ class Role extends CI_Controller {
         }
     }
 
-   
+
 
     public function edit()
     {
@@ -64,36 +66,30 @@ class Role extends CI_Controller {
             $data['heading'] = 'Role';
             $data['subview'] = 'admin/role/edit';
             $data['role'] = $this->ModelRole->findById($id);
-    
+
             $this->load->view('admin/_layout', $data);
-        }else{
+        } else {
             $id_role = $this->input->post('role_id');
             $role = $this->input->post('role');
 
             $result = $this->ModelRole->updateRole($id_role, $role);
 
-            if($result){
+            if ($result) {
                 $this->session->set_flashdata('success_role', 'Role updated successfully.');
-            }else{
+            } else {
                 $this->session->set_flashdata('error_role', 'Failed to update role.');
             }
 
             redirect('admin/role');
         }
-
-
-       
     }
 
     public function delete($id)
     {
         $result = $this->ModelRole->deleteById($id);
 
-        if ($result) {
-            $this->session->set_flashdata('success_role', 'Role deleted successfully.');
-        } else {
-            $this->session->set_flashdata('error_role', 'Failed to delete role.');
-        }
+        $message = $result ? 'Role deleted successfully.' : 'Failed to delete role.';
+        $this->session->set_flashdata('status_role', $message);
 
         redirect('admin/role');
     }

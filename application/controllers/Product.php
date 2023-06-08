@@ -19,9 +19,8 @@ class Product extends CI_Controller
             $this->load->view('_layout', $data);
         } else {
 
-            // Show 404 page
-            $this->output->set_status_header(404);
-            $this->load->view('errors/html/error_404');
+            $data['subview'] = 'category/notfound';
+            $this->load->view('_layout', $data);
         }
     }
 
