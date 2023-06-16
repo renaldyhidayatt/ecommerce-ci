@@ -46,6 +46,8 @@ class ModelRole extends CI_Model
             return $result;
         } catch (Exception $e) {
             echo $e->getMessage();
+
+            return null;
         }
     }
 

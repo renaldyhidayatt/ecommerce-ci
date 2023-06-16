@@ -12,7 +12,7 @@ class ModelAuth extends CI_Model
     {
         $query = $this->db->get_where('user', array('email' => $email));
 
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() > 0) { // menghitung row 
             $data_user = $query->row();
             if (password_verify($password, $data_user->password)) {
                 $data = [

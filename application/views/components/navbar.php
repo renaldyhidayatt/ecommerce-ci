@@ -16,7 +16,7 @@
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-white md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent">
                 <li>
-                    <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0" aria-current="page">Home</a>
+                    <a href="<?= base_url(); ?>" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0" aria-current="page">Home</a>
                 </li>
                 <?php if (!empty($this->session->userdata('email'))) { ?>
                     <li>
@@ -27,7 +27,7 @@
                         <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
                                 <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                                    <a href="<?= base_url('member/myProfile'); ?>" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
                                 </li>
                                 <li>
                                     <a href="<?= base_url('order/'); ?>" class="block px-4 py-2 hover:bg-gray-100">Orders</a>

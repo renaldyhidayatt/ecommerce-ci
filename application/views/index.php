@@ -67,7 +67,7 @@
                             </h3>
                             <p class="mt-1 text-gray-600"><?= $row->description; ?></p>
                             <p class="mt-2 text-gray-800 font-semibold">
-                                Rp. <?= number_format($row->price, 2) ?>
+                                Rp. <?= number_format($row->price, 0) ?>
                             </p>
                         </div>
                     </div>

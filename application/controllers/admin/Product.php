@@ -156,84 +156,122 @@ class Product extends CI_Controller
             ]
         );
 
-        $id_product = $this->uri->segment(4);
 
-        $config['upload_path'] = './assets/img/upload/product';
-        $config['allowed_types'] = 'jpg|png|jpeg';
-        $config['max_size'] = '3000';
-        $config['max_width'] = '3000';
-        $config['max_height'] = '3000';
-        $config['file_name'] = 'img' . time();
-        $this->load->library('upload', $config);
+        try {
+            $id_product = $this->uri->segment(4);
 
-        if ($this->form_validation->run() != true) {
-            $data['title'] = 'Product - Ecommerce Admin';
-            $data['heading'] = 'Product';
-            $data['subview'] = 'admin/product/edit';
-            $data['category'] = $this->ModelCategory->findAll();
-            $data['product'] = $this->ModelProduct->findById($id_product);
+            if (!is_numeric($id_product)) {
+                throw new Exception('Invalid product ID');
+            }
+            $config['upload_path'] = './assets/img/upload/product';
+            $config['allowed_types'] = 'jpg|png|jpeg';
+            $config['max_size'] = '3000';
+            $config['max_width'] = '3000';
+            $config['max_height'] = '3000';
+            $config['file_name'] = 'img' . time();
+            $this->load->library('upload', $config);
 
-            $this->load->view('admin/_layout', $data);
-        } else {
-            $id = $this->input->post('product_id');
-            $name = $this->input->post('name');
-            $category_id = $this->input->post('category_id');
-            $description = $this->input->post('description');
-            $price = $this->input->post('price');
-            $countInStock = $this->input->post('countInStock');
-            $slug = url_title($name, 'dash', true);
-            $old_image = $this->ModelProduct->getImage($id);
+            $findById = $this->ModelProduct->findById($id_product);
 
-            $image = $old_image;
+            if ($findById == null) {
+                throw new Exception('Product not found');
+            }
 
-            if (!empty($_FILES['image']['name'])) {
-                if ($this->upload->do_upload('image')) {
-                    $imageData = $this->upload->data();
-                    $image = $imageData['file_name'];
+            if ($this->form_validation->run() != true) {
+                $data['title'] = 'Product - Ecommerce Admin';
+                $data['heading'] = 'Product';
+                $data['subview'] = 'admin/product/edit';
+                $data['category'] = $this->ModelCategory->findAll();
+                $data['product'] = $findById;
 
-                    if (!empty($old_image)) {
-                        unlink('./assets/img/upload/product/' . $old_image);
+                $this->load->view('admin/_layout', $data);
+            } else {
+                $id = $this->input->post('product_id');
+                $name = $this->input->post('name');
+                $category_id = $this->input->post('category_id');
+                $description = $this->input->post('description');
+                $price = $this->input->post('price');
+                $countInStock = $this->input->post('countInStock');
+                $slug = url_title($name, 'dash', true);
+                $old_image = $this->ModelProduct->getImage($id);
+
+                $image = $old_image;
+
+                if (!empty($_FILES['image']['name'])) {
+                    if ($this->upload->do_upload('image')) {
+                        $imageData = $this->upload->data();
+                        $image = $imageData['file_name'];
+
+                        if (!empty($old_image)) {
+                            unlink('./assets/img/upload/product/' . $old_image);
+                        }
+                    } else {
+                        $this->session->set_flashdata('error_product', 'Error uploading image');
+                        redirect("admin/product", 'refresh');
                     }
+                }
+
+                $data = [
+                    'name' => $name,
+                    'image_product' => $image,
+                    'category_id' => $category_id,
+                    'description' => $description,
+                    'slug_product' => $slug,
+                    'price' => $price,
+                    'countInStock' => $countInStock
+                ];
+
+                if ($this->ModelProduct->update($id, $data) == true) {
+                    $this->session->set_flashdata('success_product', 'Proses update Product Berhasil');
+                    redirect("admin/product");
                 } else {
-                    $this->session->set_flashdata('error_product', 'Error uploading image');
+                    $this->session->set_flashdata('error_product', 'Error update product');
                     redirect("admin/product", 'refresh');
                 }
             }
-
-            $data = [
-                'name' => $name,
-                'image_product' => $image,
-                'category_id' => $category_id,
-                'description' => $description,
-                'slug_product' => $slug,
-                'price' => $price,
-                'countInStock' => $countInStock
-            ];
-
-            if ($this->ModelProduct->update($id, $data) == true) {
-                $this->session->set_flashdata('success_product', 'Proses update Product Berhasil');
-                redirect("admin/product");
-            } else {
-                $this->session->set_flashdata('error_product', 'Error update product');
-                redirect("admin/product", 'refresh');
-            }
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error_product', $e->getMessage());
+            redirect("admin/product", 'refresh');
         }
     }
 
 
     public function delete()
     {
-        $id = $this->uri->segment(4);
+        try {
+            $id = $this->uri->segment(4);
 
-        $image = $this->ModelProduct->getImage($id);
+            if (!is_numeric($id)) {
+                throw new Exception('Invalid product ID');
+            }
 
+            $product = $this->ModelProduct->findById($id);
 
+            if (!$product) {
+                throw new Exception('Product not found');
+            }
 
-        if (!empty($image)) {
-            unlink('./assets/img/upload/product/' . $image);
+            $image = $this->ModelProduct->getImage($id);
+
+            if (!empty($image)) {
+                unlink('./assets/img/upload/product/' . $image);
+            }
+
+            $result = $this->ModelProduct->delete($id);
+
+            if($result){
+                $this->session->set_flashdata('success_product', 'Product deleted successfully');
+
+                redirect("admin/product");
+            }else{
+                $this->session->set_flashdata('error_product','Failed to delete Product');
+
+                redirect("admin/product", 'refresh');
+            }
+
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error_product', $e->getMessage());
+            redirect("admin/product", 'refresh');
         }
-        $this->ModelProduct->delete($id);
-
-        redirect("admin/product");
     }
 }

@@ -15,19 +15,22 @@
         var form = document.getElementById('cartForm');
         var formData = new FormData(form);
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', form.action, true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
+        fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
                     alert('Product added to cart successfully.');
                     window.location.href = '<?= base_url(); ?>';
                 } else {
-                    alert('An error occurred while adding the product to cart.');
+                    throw new Error('An error occurred while adding the product to cart.');
                 }
-            }
-        };
-        xhr.send(formData);
+            })
+            .catch(error => {
+                console.error('Error adding product to cart: ', error);
+                alert('An error occurred while adding the product to cart.');
+            });
     }
 </script>
 

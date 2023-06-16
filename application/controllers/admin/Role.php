@@ -50,7 +50,7 @@ class Role extends CI_Controller
 
     public function edit()
     {
-        $id = $this->uri->segment(4);
+
         $this->form_validation->set_rules(
             'role',
             'Nama Role',
@@ -61,36 +61,79 @@ class Role extends CI_Controller
             ]
         );
 
-        if ($this->form_validation->run() != true) {
-            $data['title'] = 'Role - Ecommerce Admin';
-            $data['heading'] = 'Role';
-            $data['subview'] = 'admin/role/edit';
-            $data['role'] = $this->ModelRole->findById($id);
+        try {
+            $id = $this->uri->segment(4);
 
-            $this->load->view('admin/_layout', $data);
-        } else {
-            $id_role = $this->input->post('role_id');
-            $role = $this->input->post('role');
 
-            $result = $this->ModelRole->updateRole($id_role, $role);
-
-            if ($result) {
-                $this->session->set_flashdata('success_role', 'Role updated successfully.');
-            } else {
-                $this->session->set_flashdata('error_role', 'Failed to update role.');
+            if (!is_numeric($id)) {
+                throw new Exception('Invalid role ID');
             }
 
-            redirect('admin/role');
+            $findById = $this->ModelRole->findById($id);
+
+            if ($this->form_validation->run() != true) {
+                $data['title'] = 'Role - Ecommerce Admin';
+                $data['heading'] = 'Role';
+                $data['subview'] = 'admin/role/edit';
+                $data['role'] = $findById;
+
+                $this->load->view('admin/_layout', $data);
+            } else {
+                $id_role = $this->input->post('role_id');
+                $role = $this->input->post('role');
+
+                $result = $this->ModelRole->updateRole($id_role, $role);
+
+                if ($result) {
+                    $this->session->set_flashdata('success_role', 'Role updated successfully.');
+                    redirect("admin/role");
+                } else {
+                    $this->session->set_flashdata('error_role', 'Failed to update role.');
+                    redirect("admin/role", 'refresh');
+                }
+
+                redirect('admin/role');
+            }
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error_role', $e->getMessage());
+            redirect("admin/category", 'refresh');
         }
     }
 
-    public function delete($id)
-    {
-        $result = $this->ModelRole->deleteById($id);
+    public function delete()
+    {   
+        try{
+            $id = $this->uri->segment(4);
 
-        $message = $result ? 'Role deleted successfully.' : 'Failed to delete role.';
-        $this->session->set_flashdata('status_role', $message);
+            if (!is_numeric($id)) {
+                throw new Exception('Invalid Role ID');
+            }
 
-        redirect('admin/role');
+
+            $role = $this->ModelRole->findById($id);
+
+            if(!$role){
+                throw new Exception('Role not found');
+            }
+
+            $result = $this->ModelRole->deleteById($id);
+
+            if($result){
+                $this->session->set_flashdata('success_role', 'Role deleted successfully');
+
+                redirect("admin/role");
+            }else{
+                $this->session->set_flashdata('error_role','Failed to delete role.');
+
+                redirect("admin/role", 'refresh');
+            }
+
+            
+        }catch(Exception $e){
+            $this->session->set_flashdata('error_role', $e->getMessage());
+            
+            redirect("admin/role", 'refresh');
+        }
+
     }
 }

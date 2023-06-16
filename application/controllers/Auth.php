@@ -90,7 +90,7 @@ class Auth extends CI_Controller
             $email = $this->input->post('email');
             $password = $this->input->post('password');
 
-            if($this->ModelAuth->login($email,$password) == True){
+            if($this->ModelAuth->login($email,$password) == true){
                 $this->session->set_flashdata('success_login','Proses Login User Berhasil');
                 redirect("home");
 

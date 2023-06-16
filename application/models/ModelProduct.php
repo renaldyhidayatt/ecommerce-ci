@@ -16,14 +16,13 @@ class ModelProduct extends CI_Model
                 'slug_product' => $slug
             ];
 
-
-
-            // $this->db->insert('product', $data);
             $this->db->insert('product', $data);
 
             return true;
         } catch (Exception $e) {
             echo $e->getMessage();
+
+            return null;
         }
     }
 
@@ -36,6 +35,8 @@ class ModelProduct extends CI_Model
             return $result;
         } catch (Exception $e) {
             echo $e->getMessage();
+            
+            return null;
         }
     }
 
@@ -49,6 +50,8 @@ class ModelProduct extends CI_Model
             return $result;
         } catch (Exception $e) {
             echo $e->getMessage();
+
+            return null;
         }
     }
 
@@ -130,6 +133,8 @@ class ModelProduct extends CI_Model
     {
         $this->db->where('product_id', $id);
         $this->db->delete('product');
+
+        return true;
     }
 
     public function getImage($product_id)
