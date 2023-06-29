@@ -81,9 +81,9 @@ class Category extends CI_Controller
         try {
             $id = $this->uri->segment(4);
 
-            if (!is_numeric($id)) {
-                throw new Exception('Invalid category ID');
-            }
+            // if (!is_numeric($id)) {
+            //     throw new Exception('Invalid category ID');
+            // }
 
             $config['upload_path'] = './assets/img/upload/category';
             $config['allowed_types'] = 'jpg|png|jpeg';
@@ -95,9 +95,9 @@ class Category extends CI_Controller
 
             $findById = $this->ModelCategory->findById($id);
 
-            if ($findById == null) {
-                throw new Exception('Category not found');
-            }
+            // if ($findById == null) {
+            //     throw new Exception('Category not found');
+            // }
 
             if ($this->form_validation->run() != true) {
                 $data['title'] = 'Category - Ecommerce Admin';

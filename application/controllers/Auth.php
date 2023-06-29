@@ -275,9 +275,16 @@ class Auth extends CI_Controller
             $lastname = $this->input->post('lastname');
             $email = $this->input->post('email');
             $password = $this->input->post('password');
-            $this->ModelAuth->register($firstname, $lastname, $email, $password);
-            $this->session->set_flashdata('success_register','Proses Pendaftaran User Berhasil');
-            redirect("auth/login");
+            $register =  $this->ModelAuth->register($firstname, $lastname, $email, $password);
+
+            if($register){
+                $this->session->set_flashdata('success_register','Proses Pendaftaran User Berhasil');
+                redirect("auth/login");
+
+            }else{
+                $this->session->set_flashdata('error','email sudah ada');
+                redirect('auth/register', 'refresh');
+            }
         }
     }
 

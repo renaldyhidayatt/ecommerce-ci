@@ -19,7 +19,7 @@ class Product extends CI_Controller
             $this->load->view('_layout', $data);
         } else {
 
-            $data['subview'] = 'category/notfound';
+            $data['subview'] = 'product/notfound';
             $this->load->view('_layout', $data);
         }
     }

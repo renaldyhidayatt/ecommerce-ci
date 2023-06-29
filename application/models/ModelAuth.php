@@ -32,18 +32,24 @@ class ModelAuth extends CI_Model
         }
     }
 
-    public function register($firstname, $lastname,$email, $password)
+    public function register($firstname, $lastname, $email, $password)
     {
+        $existingUser = $this->db->get_where('user', array('email' => $email))->row();
+        if ($existingUser) {
+            return false; 
+        }
+    
+        // Create new user
         $data_user = array(
             'firstname' => $firstname,
             'lastname' => $lastname,
             'email' => $email,
-            'role_id' => 1,
+            'role_id' => 2,
             'password' => password_hash($password, PASSWORD_BCRYPT),
         );
         $this->db->insert('user', $data_user);
-
-
+    
         return true;
     }
+    
 }

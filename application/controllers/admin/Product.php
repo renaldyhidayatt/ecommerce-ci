@@ -160,9 +160,9 @@ class Product extends CI_Controller
         try {
             $id_product = $this->uri->segment(4);
 
-            if (!is_numeric($id_product)) {
-                throw new Exception('Invalid product ID');
-            }
+            // if (!is_numeric($id_product)) {
+            //     throw new Exception('Invalid product ID');
+            // }
             $config['upload_path'] = './assets/img/upload/product';
             $config['allowed_types'] = 'jpg|png|jpeg';
             $config['max_size'] = '3000';
@@ -173,9 +173,9 @@ class Product extends CI_Controller
 
             $findById = $this->ModelProduct->findById($id_product);
 
-            if ($findById == null) {
-                throw new Exception('Product not found');
-            }
+            // if ($findById == null) {
+            //     throw new Exception('Product not found');
+            // }
 
             if ($this->form_validation->run() != true) {
                 $data['title'] = 'Product - Ecommerce Admin';

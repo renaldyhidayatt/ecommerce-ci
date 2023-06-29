@@ -21,6 +21,13 @@ class ModelCart extends CI_Model
         }
     }
 
+    public function findByUserId($userId)
+    {
+        $this->db->where('user_id', $userId);
+        $query = $this->db->get('cart');
+        return $query->result();
+    }
+
 
 
     public function findByEmailCartRow($email)

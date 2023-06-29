@@ -21,7 +21,7 @@ class Order extends CI_Controller
     public function create()
     {
         $orderID = $this->input->post('order_id');
-        $email = $this->input->post('email');
+        $email = $this->session->userdata('email');
         $postalCode = $this->input->post('postal_code');
         $countryCode = $this->input->post('country_code');
         $totalProduct = $this->input->post('total_product');
@@ -75,5 +75,12 @@ class Order extends CI_Controller
 
     }
 
-    // delete
+    public function delete(){
+        $id = $this->uri->segment(3);
+
+        $this->ModelOrder->deletebyId($id);
+
+        return redirect("order");
+    }
+
 }

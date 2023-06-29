@@ -47,13 +47,13 @@
                 </li>
                 <li class="sidebar-item ">
                     <a href="<?= base_url('admin/role'); ?>" class="sidebar-link">
-                        <i class="bi bi-hammer"></i>
+                        <i class="bi bi-shield-check"></i>
                         <span>Role</span>
                     </a>
                 </li>
                 <li class="sidebar-item ">
                     <a href="<?= base_url('admin/category'); ?>" class="sidebar-link">
-                        <i class="bi bi-hammer"></i>
+                    <i class="bi bi-list-ul"></i>
                         <span>Category</span>
                     </a>
                 </li>
@@ -65,20 +65,20 @@
                 </li>
                 <li class="sidebar-item ">
                     <a href="<?= base_url('admin/order'); ?>" class="sidebar-link">
-                        <i class="bi bi-hammer"></i>
-                        <span>order</span>
+                        <i class="bi bi-cart"></i>
+                        <span>Order</span>
                     </a>
                 </li>
                 <li class="sidebar-item ">
                     <a href="<?= base_url('admin/slider'); ?>" class="sidebar-link">
-                        <i class="bi bi-hammer"></i>
+                        <i class="bi bi-cast"></i>
                         <span>Slider</span>
                     </a>
                 </li>
                 <li class="sidebar-title">Logout</li>
                 <li class="sidebar-item ">
                     <a href="<?= base_url('auth/logout'); ?>" class="sidebar-link">
-                        <i class="bi bi-hammer"></i>
+                        <i class="bi bi-box-arrow-right"></i>
                         <span>Logout</span>
                     </a>
                 </li>

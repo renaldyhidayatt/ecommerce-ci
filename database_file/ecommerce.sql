@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2023 at 03:40 PM
+-- Generation Time: Jun 20, 2023 at 01:00 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -37,6 +37,16 @@ CREATE TABLE `cart` (
   `quantity` int(100) NOT NULL,
   `product_id` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `name`, `price`, `email`, `user_id`, `image`, `quantity`, `product_id`) VALUES
+(67, 'Thirst', '113', 'akbarsarivi20@gmail.com', 6, 'img1685963641.jpg', 2, 3),
+(68, 'Iphone 13', '233', 'akbarsarivi20@gmail.com', 6, 'img1685959031.jpg', 2, 2),
+(69, 'Iphone tab 21', '100001', 'akbarsarivi20@gmail.com', 6, 'img1685963617.jpg', 4, 1),
+(70, 'Thirst', '113', 'dragon@gmail.com', 1, 'img1685963641.jpg', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -108,6 +118,7 @@ INSERT INTO `orders` (`order_id`, `email`, `postal_code`, `user_id`, `country_co
 ('lcFf0htykT', 'sb-msp43g13315533@personal.example.com', '95131', 1, 'US', '566701', '5', '2023-06-05 14:54:42', '2023-06-05 14:54:42'),
 ('noOEz8qlnE', 'sb-msp43g13315533@personal.example.com', '95131', 1, 'US', '466', '2', '2023-06-05 17:15:48', '2023-06-05 17:15:48'),
 ('oaqvQcusus', 'sb-msp43g13315533@personal.example.com', '95131', 1, 'US', '200002', '2', '2023-06-05 15:20:16', '2023-06-05 15:20:16'),
+('qUdY1EJQxy', 'sb-msp43g13315533@personal.example.com', '95131', 6, 'US', '200348', '4', '2023-06-20 17:54:04', '2023-06-20 17:54:04'),
 ('rZNZFqwPOa', 'sb-msp43g13315533@personal.example.com', '95131', 1, 'US', '244466', '2', '2023-06-05 15:02:30', '2023-06-05 15:02:30'),
 ('tmxtrL8FBk', 'sb-msp43g13315533@personal.example.com', '95131', 1, 'US', '122233', '1', '2023-06-05 15:08:24', '2023-06-05 15:08:24'),
 ('TsHiM8MDE7', 'sb-msp43g13315533@personal.example.com', '95131', 1, 'US', '226', '2', '2023-06-05 17:30:33', '2023-06-05 17:30:33'),
@@ -142,9 +153,9 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `name`, `slug_product`, `image_product`, `category_id`, `description`, `price`, `countInStock`, `created_at`, `updated_at`) VALUES
-(1, 'Iphone tab 21', 'iphone-tab-21', 'img1685963617.jpg', 1, 'iPad adalah sebuah produk komputer tablet buatan Apple Inc. (AI). iPad memiliki bentuk tampilan yang hampir serupa dengan iPod Touch dan iPhone, hanya saja ukurannya lebih besar dibandingkan kedua produk tersebut dan memiliki fungsi-fungsi tambahan sepert', 100001, 194, '2023-06-04 01:00:53', '2023-06-05 18:15:35'),
-(2, 'Iphone 13', 'iphone-13', 'img1685959031.jpg', 1, 'iPhone 13[2] dan iPhone 13 Mini (dipasarkan sebagai iPhone 13 mini) adalah sebuah jenis telepon pintar yang dirancang, dikembangkan dan dipasarkan oleh Apple Inc. Produk tersebut adalah iPhone berharga rendah dan generasi kelima belas, menyusul iPhone 12.', 233, 194, '2023-06-05 09:49:02', '2023-06-05 18:20:31'),
-(3, 'Thirst', 'thirst', 'img1685963641.jpg', 2, 'Bahan tekstil dan serat yang digunakan sebagai penutup tubuh. Pakaian adalah kebutuhan pokok manusia selain makanan dan tempat berteduh/tempat tinggal (rumah). Manusia membutuhkan pakaian untuk melindungi dan menutup dirinya.', 113, 187, '2023-06-05 09:49:44', '2023-06-05 18:20:31');
+(1, 'Iphone tab 21', 'iphone-tab-21', 'img1685963617.jpg', 1, 'iPad adalah sebuah produk komputer tablet buatan Apple Inc. (AI). iPad memiliki bentuk tampilan yang hampir serupa dengan iPod Touch dan iPhone, hanya saja ukurannya lebih besar dibandingkan kedua produk tersebut dan memiliki fungsi-fungsi tambahan sepert', 100001, 192, '2023-06-04 01:00:53', '2023-06-20 17:54:04'),
+(2, 'Iphone 13', 'iphone-13', 'img1685959031.jpg', 1, 'iPhone 13[2] dan iPhone 13 Mini (dipasarkan sebagai iPhone 13 mini) adalah sebuah jenis telepon pintar yang dirancang, dikembangkan dan dipasarkan oleh Apple Inc. Produk tersebut adalah iPhone berharga rendah dan generasi kelima belas, menyusul iPhone 12.', 233, 193, '2023-06-05 09:49:02', '2023-06-20 17:54:04'),
+(3, 'Thirst', 'thirst', 'img1685963641.jpg', 2, 'Bahan tekstil dan serat yang digunakan sebagai penutup tubuh. Pakaian adalah kebutuhan pokok manusia selain makanan dan tempat berteduh/tempat tinggal (rumah). Manusia membutuhkan pakaian untuk melindungi dan menutup dirinya.', 113, 186, '2023-06-05 09:49:44', '2023-06-20 17:54:04');
 
 -- --------------------------------------------------------
 
@@ -202,6 +213,7 @@ CREATE TABLE `user` (
   `email` varchar(30) NOT NULL,
   `password` varchar(70) NOT NULL,
   `role_id` int(11) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -210,11 +222,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `email`, `password`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 'Dragon', 'Knight', 'dragon@gmail.com', '$2y$10$qwttw7kUzDdXumJVYBAZS.AX5/9ATW.cR3f/PWN3mG.OUYRCNTRA6', 1, '2023-06-02 18:29:47', NULL),
-(2, 'Kentang', 'Knight', 'dota@gmail.com', '$2y$10$sAAFL86YYDhPV.H5A1hPFu13sRK0Op/plW24vQ589fR2Y7pl5pXk6', 1, '2023-06-02 18:45:41', NULL),
-(3, 'Customis', 'FatalError', 'fatalerror@gmail.com', '$2y$10$QL9.AAglmovyNWq3qRV3Vu.FaVNZUSkx1Mf4.1TOINFoE02fMTtxO', 1, '2023-06-02 18:46:57', NULL),
-(5, 'Dragoass', 'asadhfaskas', 'django@gmail.com', '$2y$10$EDcOskHhg7kuVKtaEwobse00GgxfSfkX26u9T0vIQWO9V4yn2dGo.', 1, '2023-06-03 01:52:26', NULL);
+INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `email`, `password`, `role_id`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'Dragon', 'Knight', 'dragon@gmail.com', '$2y$10$qwttw7kUzDdXumJVYBAZS.AX5/9ATW.cR3f/PWN3mG.OUYRCNTRA6', 1, 'img1687258784.jpg', '2023-06-20 10:59:44', NULL),
+(2, 'Kentang', 'Knight', 'dota@gmail.com', '$2y$10$sAAFL86YYDhPV.H5A1hPFu13sRK0Op/plW24vQ589fR2Y7pl5pXk6', 1, NULL, '2023-06-02 18:45:41', NULL),
+(3, 'Customis', 'FatalError', 'fatalerror@gmail.com', '$2y$10$QL9.AAglmovyNWq3qRV3Vu.FaVNZUSkx1Mf4.1TOINFoE02fMTtxO', 1, NULL, '2023-06-02 18:46:57', NULL),
+(5, 'Dragoass', 'asadhfaskas', 'django@gmail.com', '$2y$10$EDcOskHhg7kuVKtaEwobse00GgxfSfkX26u9T0vIQWO9V4yn2dGo.', 1, NULL, '2023-06-03 01:52:26', NULL),
+(6, 'akbarr', 'sarivii', 'akbarsarivi20@gmail.com', '$2y$10$9LaD0hN55dM34I3Nunf0cuKYf2Eg/m1YytMX5cVpyVc6qCSsd5Y3K', 1, NULL, '2023-06-20 10:52:06', NULL);
 
 --
 -- Indexes for dumped tables
@@ -225,8 +238,7 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `email`, `password`, `ro
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `category`
@@ -274,7 +286,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `cart_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -304,7 +316,7 @@ ALTER TABLE `slider`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -314,8 +326,7 @@ ALTER TABLE `user`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `product`

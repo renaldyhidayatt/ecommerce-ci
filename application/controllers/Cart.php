@@ -10,7 +10,8 @@ class Cart extends CI_Controller
 
     public function index(){
         $data['subview'] = 'cart/index';
-        $data['cart'] = $this->ModelCart->findAll();
+        $user_id = $this->session->userdata('user_id');
+        $data['cart'] = $this->ModelCart->findByUserId($user_id);
        
        
 

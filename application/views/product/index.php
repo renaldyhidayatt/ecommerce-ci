@@ -24,6 +24,7 @@
                     alert('Product added to cart successfully.');
                     window.location.href = '<?= base_url(); ?>';
                 } else {
+                    console.log(response.text)
                     throw new Error('An error occurred while adding the product to cart.');
                 }
             })
@@ -67,6 +68,9 @@
                             Rp.<?= $row->price; ?>
                         </p>
 
+                        <p class="mt-6 text-gray-800 font-semibold">
+                            Stock: <?php echo $row->countInStock ?>
+                        </p>
                         <div class="mt-6">
                             <?php if ($row->countInStock > 0) { ?>
                                 <form id="cartForm" action="<?= base_url('cart/create') ?>" method="POST">
@@ -94,6 +98,7 @@
                                     </button>
                                 </div>
                             <?php } ?>
+                            
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ class Order extends CI_Controller
     public function delete(){
         $id = $this->uri->segment(4);
 
-        $this->ModelOrder->delete($id);
+        $this->ModelOrder->deletebyId($id);
 
         return redirect("admin/order");
     }

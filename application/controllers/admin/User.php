@@ -75,9 +75,6 @@ class User extends CI_Controller
                 redirect("admin/user", 'refresh');
             }
         }
-
-
-   
     }
 
     public function edit()
@@ -145,37 +142,60 @@ class User extends CI_Controller
     }
 
     public function laporan_user_pdf()
-	{
-		$this->load->library('Dompdf_gen');
+    {
+        $this->load->library('Dompdf_gen');
 
-		$data['user'] = $this->ModelUser->findAll();
+        $data['user'] = $this->ModelUser->findAll();
 
-		$this->load->view('admin/user/export_pdf', $data);
+        $this->load->view('admin/user/export_pdf', $data);
 
-		$paper = 'A4';
-		$orien = 'landscape';
-		$html = $this->output->get_output();
-		
-		$this->dompdf->set_paper($paper, $orien);
-		$this->dompdf->load_html($html);
-		$this->dompdf->render();
-		$this->dompdf->stream('laporan_data_user.pdf');
-	}
+        $paper = 'A4';
+        $orien = 'landscape';
+        $html = $this->output->get_output();
 
-    public function export_excel(){
-        $data = array(
-			'title' => 'Laporan User',
-			'user' =>  $this->ModelUser->findAll()
-		);
-		
-		$this->load->view('admin/user/export_excel_user', $data);
+        $this->dompdf->set_paper($paper, $orien);
+        $this->dompdf->load_html($html);
+        $this->dompdf->render();
+        $this->dompdf->stream('laporan_data_user.pdf');
     }
 
-    public function delete(){
-        $id = $this->uri->segment(4);
+    public function export_excel()
+    {
+        $data = array(
+            'title' => 'Laporan User',
+            'user' =>  $this->ModelUser->findAll()
+        );
 
-        $this->ModelUser->deleteUser($id);
+        $this->load->view('admin/user/export_excel_user', $data);
+    }
 
-        redirect('admin/user');
+    public function delete()
+    {
+        try {
+            $id = $this->uri->segment(4);
+
+            if (!is_numeric($id)) {
+                throw new Exception('Invalid user ID');
+            }
+
+            $user = $this->ModelUser->findById($id);
+
+            if (!$user) {
+                throw new Exception('User not found');
+            }
+
+            $result = $this->ModelUser->deleteUser($id);
+
+            if ($result) {
+                $this->session->set_flashdata('success_user', 'User deleted successfully');
+                redirect("admin/user");
+            } else {
+                $this->session->set_flashdata('error_user', 'Failed to delete User');
+                redirect("admin/user", 'refresh');
+            }
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error_user', $e->getMessage());
+            redirect("admin/user", 'refresh');
+        }
     }
 }

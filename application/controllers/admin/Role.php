@@ -9,7 +9,6 @@ class Role extends CI_Controller
         parent::__construct();
         cek_login();
         cek_user();
-        // Load the required models
         $this->load->model('ModelRole');
     }
 
@@ -65,9 +64,9 @@ class Role extends CI_Controller
             $id = $this->uri->segment(4);
 
 
-            if (!is_numeric($id)) {
-                throw new Exception('Invalid role ID');
-            }
+            // if (!is_numeric($id)) {
+            //     throw new Exception('Invalid role ID');
+            // }
 
             $findById = $this->ModelRole->findById($id);
 
@@ -96,7 +95,7 @@ class Role extends CI_Controller
             }
         } catch (Exception $e) {
             $this->session->set_flashdata('error_role', $e->getMessage());
-            redirect("admin/category", 'refresh');
+            redirect("admin/role", 'refresh');
         }
     }
 

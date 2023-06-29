@@ -78,9 +78,9 @@ class Slider extends CI_Controller
             $id = $this->uri->segment(4);
 
 
-            if (!is_numeric($id)) {
-                throw new Exception('Invalid slider ID');
-            }
+            // if (!is_numeric($id)) {
+            //     throw new Exception('Invalid slider ID');
+            // }
 
             $config['upload_path'] = './assets/img/upload/slider';
             $config['allowed_types'] = 'jpg|png|jpeg';
@@ -92,9 +92,9 @@ class Slider extends CI_Controller
 
             $findById =  $this->ModelSlider->findById($id);
 
-            if ($findById == null) {
-                throw new Exception('Slider not found');
-            }
+            // if ($findById == null) {
+            //     throw new Exception('Slider not found');
+            // }
 
             if ($this->form_validation->run() != true) {
                 $data['title'] = 'Slider - Ecommerce Admin';

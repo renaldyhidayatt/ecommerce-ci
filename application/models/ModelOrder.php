@@ -79,4 +79,15 @@ class ModelOrder extends CI_Model
     public function countOrder(){
         return $this->db->count_all('orders');
     }
+
+    public function deleteById($id){
+        try {
+            $this->db->where('order_id', $id);
+            $this->db->delete('orders');
+            return true;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }
